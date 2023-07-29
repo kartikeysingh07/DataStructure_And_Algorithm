@@ -1,16 +1,16 @@
 /*
-Solution to Mountain Array problem:
-Find peak -> Distribute the array in two section with **peak as end** and **peak as start**
--> Using binary search find the index of target elements -> Return the greatest index.
- */
-public class MountainArray {
+Rotated Array Binary Search: Here the array is rotated by having a particular pivot.
+*/
 
-    public static void main(String[] arg) {
-        int[] mountainArray = {1, 2, 3, 4, 7, 3, 2, 1};
+
+public class RotatedArrayBinarySearch {
+    public static void main(String[] args){
+        int[] arr = {4,5,8,9,0,1,2};
         int target = 2;
-        int peak = findPeak(mountainArray);
-        int index1 = binarySearch(mountainArray, target, 0, peak, false);
-        int index2 = binarySearch(mountainArray, target, peak, mountainArray.length - 1, true);
+        int peak = findPeak(arr);
+        System.out.println(peak);
+        int index1 = binarySearch(arr, target, 0, peak);
+        int index2 = binarySearch(arr, target, peak+1, arr.length - 1);
         if(index2==-1){
             if(index1==-1) System.out.println("Target Element not found");
             else System.out.println("Target element at: "+index1);
@@ -21,7 +21,6 @@ public class MountainArray {
     private static int findPeak(int[] arr) {
         int start = 0;
         int end = arr.length - 1;
-
         while (start < end) {
             int mid = (start + end) / 2;
             if ((arr[mid] > arr[mid + 1]) && (arr[mid] > arr[mid - 1])) {
@@ -33,9 +32,7 @@ public class MountainArray {
         return -1;
     }
 
-    private static int binarySearch(int[] arr, int target, int start, int end, boolean desc) {
-
-        if(!desc){
+    private static int binarySearch(int[] arr, int target, int start, int end) {
             while(start<=end){
                 int mid = start + (end-start)/2;
                 if(arr[mid]==target){
@@ -46,19 +43,6 @@ public class MountainArray {
                 }
                 else end = mid-1;
             }
-        }
-        else{
-            while(start<=end){
-                int mid = start + (end-start)/2;
-                if(arr[mid]==target){
-                    return mid;
-                }
-                else if(arr[mid]>target){
-                    start = mid+1;
-                }
-                else end = mid-1;
-            }
-        }
         return -1;
     }
 }
